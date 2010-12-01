@@ -40,6 +40,15 @@ class Leases(object):
     
     def __iter__(self):
         return iter(self.leases)
+    
+    def yield_unique(self):
+        reported = []
+        for lease in self.leases:
+            if (lease.host_name, lease.ip) in reported:
+                continue
+            else:
+                reported.append((lease.host_name, lease.ip))
+                yield lease
 
 class Lease(object):
     

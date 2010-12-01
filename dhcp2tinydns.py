@@ -108,9 +108,7 @@ if options.macfile:
         domain_name = '%s.%s' % (host_name, options.domain)
         dynamics.add(tinydns.data.Alias(domain_name, lease.ip, ttl=calc_ttl(lease)))
 
-
-
-for lease in leases:
+for lease in leases.yield_unique():
     if lease.host_name != None and \
             lease.host_name not in mac_host_names:
         domain_name = '%s.%s' % (lease.host_name, options.domain)
