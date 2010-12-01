@@ -54,7 +54,7 @@ options = parser.parse_args()
 if options.static == None:
     options.static = []
     if os.path.exists(options.root):
-        for item in os.listdir(options.root).sorted():
+        for item in sorted(os.listdir(options.root)):
             if item.endswith('.static'):
                 options.static.append(os.path.join(options.root, item))
 while options.domain.startswith('.'):
