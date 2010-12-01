@@ -221,7 +221,7 @@ class Pointer(_DataLine):
 class Cname(_DataLine):
     
     markers = ('C')
-    field_names = ('host_name', 'target', 'ttl', 'stamp', 'lo')
+    field_names = ('host_name', 'target', 'ttl', 'stamp', 'location')
     
     def __init__(self, host_name, target, ttl='', stamp='', location=''):
         self.marker = 'C'
