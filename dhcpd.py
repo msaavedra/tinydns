@@ -20,7 +20,7 @@ class Leases(object):
             elif current_lease != None:
                 current_lease.add_line(line)
             else:
-                raise Exception('Invalid line: %s' % line)
+                continue
         self.leases.sort()
         self.leases.reverse()
     
