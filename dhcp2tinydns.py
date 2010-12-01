@@ -85,8 +85,14 @@ def calc_ttl(lease):
     ttl = min(ttl, 86400)
     return str(ttl)
 
-leases = tinydns.dhcpd.Leases(options.leases)
 dynamics = tinydns.data.Section()
+msg = '%s DHCP-Leased records for the %s domain %s' % (
+    '#' * 18,
+    options.domain,
+    '#' * 19
+    )
+dynamics.add(tinydns.data.Comment(msg))
+leases = tinydns.dhcpd.Leases(options.leases)
 
 mac_host_names = []
 if options.macfile:
@@ -102,12 +108,7 @@ if options.macfile:
         domain_name = '%s.%s' % (host_name, options.domain)
         dynamics.add(tinydns.data.Alias(domain_name, lease.ip, ttl=calc_ttl(lease)))
 
-msg = '%s DHCP-Leased records for the %s domain %s' % (
-    '#' * 18,
-    options.domain,
-    '#' * 19
-    )
-dynamics.add(tinydns.data.Comment(msg))
+
 
 for lease in leases:
     if lease.host_name != None and \
