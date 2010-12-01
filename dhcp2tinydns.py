@@ -85,6 +85,8 @@ def calc_ttl(lease):
     ttl = min(ttl, 86400)
     return str(ttl)
 
+leases = tinydns.dhcpd.Leases(options.leases)
+
 mac_host_names = []
 if options.macfile:
     for line in files.yield_lines(options.macfile):
@@ -107,7 +109,6 @@ msg = '%s DHCP-Leased records for the %s domain %s' % (
     )
 dynamics.add(tinydns.data.Comment(msg))
 
-leases = tinydns.dhcpd.Leases(options.leases)
 for lease in leases:
     if lease.host_name != None and \
             lease.host_name not in mac_host_names:
