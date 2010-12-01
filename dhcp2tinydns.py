@@ -120,5 +120,5 @@ if options.dry_run:
     print dns
 else:
     dns.merge(options.root)
-    #tinydns.data.make(options.root)
+    tinydns.data.make(options.root)
 
