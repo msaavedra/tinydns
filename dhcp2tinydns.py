@@ -107,7 +107,7 @@ msg = '%s DHCP-Leased records for the %s domain %s' % (
     )
 dynamics.add(tinydns.data.Comment(msg))
 
-leases = dhcpd.Leases(options.leases)
+leases = tinydns.dhcpd.Leases(options.leases)
 for lease in leases:
     if lease.host_name != None and \
             lease.host_name not in mac_host_names:
