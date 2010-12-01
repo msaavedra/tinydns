@@ -6,8 +6,8 @@ import time
 import re
 import argparse
 
-import tinydns
-import dhcpd
+import tinydns.data
+import tinydns.dhcpd
 from cross_platform import files
 
 ####################### Read command-line options #############################
@@ -62,17 +62,17 @@ while options.domain.startswith('.'):
 
 ##### Set up tinydns authorized host data starting with the static info #######
 
-dns = tinydns.Authority()
-warning = tinydns.Section()
-warning.add(tinydns.Comment(' DO NOT EDIT! ALL CHANGES WILL BE LOST!'))
+dns = tinydns.data.Authority()
+warning = tinydns.data.Section()
+warning.add(tinydns.data.Comment(' DO NOT EDIT! ALL CHANGES WILL BE LOST!'))
 
 dns.read_names(*options.static)
 warning.add(
-    tinydns.Comment(' This file is generated automatically from the following files.'),
-    tinydns.Comment(' Edit them instead:')
+    tinydns.data.Comment(' This file is generated automatically from the following files.'),
+    tinydns.data.Comment(' Edit them instead:')
     )
 for file_name in options.static:
-    warning.add(tinydns.Comment(file_name))
+    warning.add(tinydns.data.Comment(file_name))
 
 dns.prepend(warning)
 
@@ -97,22 +97,22 @@ if options.macfile:
         except KeyError:
             continue
         domain_name = '%s.%s' % (host_name, options.domain)
-        dynamics.add(tinydns.Alias(domain_name, lease.ip, ttl=calc_ttl(lease)))
+        dynamics.add(tinydns.data.Alias(domain_name, lease.ip, ttl=calc_ttl(lease)))
 
-dynamics = tinydns.Section()
+dynamics = tinydns.data.Section()
 msg = '%s DHCP-Leased records for the %s domain %s' % (
     '#' * 18,
     options.domain,
     '#' * 19
     )
-dynamics.add(tinydns.Comment(msg))
+dynamics.add(tinydns.data.Comment(msg))
 
 leases = dhcpd.Leases(options.leases)
 for lease in leases:
     if lease.host_name != None and \
             lease.host_name not in mac_host_names:
         domain_name = '%s.%s' % (lease.host_name, options.domain)
-        dynamics.add(tinydns.Alias(domain_name, lease.ip, ttl=calc_ttl(lease)))
+        dynamics.add(tinydns.data.Alias(domain_name, lease.ip, ttl=calc_ttl(lease)))
 
 dns.append(dynamics)
 
@@ -120,5 +120,5 @@ if options.dry_run:
     print dns
 else:
     dns.merge(options.root)
-    #tinydns.make(options.root)
+    #tinydns.data.make(options.root)
 
