@@ -78,7 +78,7 @@ class Section(object):
         self.records = []
     
     def __str__(self):
-        return '\n'.join(str(record) for record in self.records)
+        return ''.join(str(record) for record in self.records)
     
     def add(self, *lines):
         self.records.extend(lines)
@@ -123,7 +123,7 @@ class _DataLine(object):
         line = self.marker + ':'.join(self.fields)
         while line.endswith(':'):
             line = line[:-1]
-        return line
+        return line + '\n'
     
     def matches(self, field, regex):
         if re.compile(regex).search(self[field]):
@@ -261,7 +261,7 @@ class Comment(_DataLine):
         self.set_fields(vars())
     
     def __str__(self):
-        return self.marker + ':'.join(self.fields)
+        return self.marker + ':'.join(self.fields) + '\n'
 
 class Blank(_DataLine):
     
