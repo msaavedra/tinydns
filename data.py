@@ -87,7 +87,8 @@ class Section(object):
         """Read data lines from a file.
         """
         for line in files.yield_lines(self.file_name):
-            marker = line[0]
+            line = line.strip()
+            marker = line[:1] # Can't use [0] on empty lines, so use [:1]
             fields = line[1:].split(':')
             cls = MARKER_CLASSES[marker]
             self.records.append(cls.create(marker, fields))
