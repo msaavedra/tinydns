@@ -1,0 +1,10 @@
+This module provides an interface to the DNS record format used by
+the tinydns authoritative domain name server (see 
+http://cr.yp.to/djbdns/tinydns.html for more information).
+
+The module also includes a bare-bones parser for the ISC dhcpd leases file,
+and a script to import hosts with dhcp leases into the tinydns data file.
+
+The cross_platform module available at https://github.com/msaavedra/cross_platform
+is required.
+
