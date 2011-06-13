@@ -62,11 +62,11 @@ while options.domain.startswith('.'):
 
 ##### Set up tinydns authorized host data starting with the static info #######
 
-dns = tinydns.data.Authority()
+dns = tinydns.data.AuthoritativeDNS()
 warning = tinydns.data.Section()
 warning.add(tinydns.data.Comment(' DO NOT EDIT! ALL CHANGES WILL BE LOST!'))
 
-dns.read_names(*options.static)
+dns.read(*options.static)
 warning.add(
     tinydns.data.Comment(' This file is generated automatically from the following files.'),
     tinydns.data.Comment(' Edit them instead:')
